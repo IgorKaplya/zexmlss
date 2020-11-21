@@ -583,11 +583,7 @@ end; //GetCurrentPageCommentsNumber
 
 procedure TXSLXZipHelper.DoCreateOutZipStream(Sender: TObject; var AStream: TStream; AItem: TFullZipFileEntry);
 begin
-  {$ifdef MSWINDOWS}
-  AStream := TTmpFileStream.Create();
-  {$else}
   AStream := TMemoryStream.Create();
-  {$endif}
 end;
 
 procedure TXSLXZipHelper.DoDoneOutZipStream(Sender: TObject; var AStream: TStream; AItem: TFullZipFileEntry);
@@ -5888,7 +5884,7 @@ var
       //Как там эти max / min считаются?
       if (i = _sheet.ColCount - 1) then
       begin
-        if (i + 1 <= 1025) then
+        if (i + 1 >= 1025) then
           s := '1025';
       end;
       _xml.Attributes.Add('max', s, false); //??
@@ -7331,11 +7327,7 @@ var
     end
     else
     begin
-      {$ifdef MSWINDOWS}
-      Result := TTmpFileStream.Create();
-      {$else}
       Result := TMemoryStream.Create();
-      {$endif}
       StreamList.Add(Result);
       //Result := TFileStream.Create(AStreamFileName, fmCreate);
       zip.Entries.AddFileEntry(Result, AStreamFileName);
